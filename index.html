@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Molar to Mass Unit Converter</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        
+        h1 {
+            font-size: 28px;
+        }
+        
+        label {
+            font-size: 22px;
+        }
+        
+        input[type="number"], select {
+            font-size: 20px;
+        }
+        
+        #result {
+            font-size: 22px;
+            font-weight: bold;
+            background-color: lightblue;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        function calculate() {
+            var inputNumber = parseFloat(document.getElementById("inputNumber").value);
+            var inputUnit = document.getElementById("inputUnit").value;
+            var molecularWeight = parseFloat(document.getElementById("molecularWeight").value);
+            var outputUnit = document.getElementById("outputUnit").value;
+            var result;
+
+            // Convert input to moles
+            if (inputUnit === "millimolar") {
+                inputNumber = inputNumber / 1000;
+            } else if (inputUnit === "micromolar") {
+                inputNumber = inputNumber / 1000000;
+            } else if (inputUnit === "nanomolar") {
+                inputNumber = inputNumber / 1000000000;
+            } else if (inputUnit === "picomolar") {
+                inputNumber = inputNumber / 1000000000000;
+            }
+            
+            // Convert output from moles to desired unit
+            if (outputUnit === "milligram") {
+                result = inputNumber * molecularWeight * 1000;
+            } else if (outputUnit === "microgram") {
+                result = inputNumber * molecularWeight * 1000000;
+            } else if (outputUnit === "nanogram") {
+                result = inputNumber * molecularWeight * 1000000000;
+            } else if (outputUnit === "picogram") {
+                result = inputNumber * molecularWeight * 1000000000000;
+            } else {
+                result = inputNumber * molecularWeight;
+            }
+            
+            var formattedResult = numberWithCommas(result);
+
+            document.getElementById("result").innerHTML = "Result: " + formattedResult + " " + outputUnit;
+        }
+    </script>
+</head>
+<body>
+    <div style="margin-top: 100px;">
+        <h1>Molar to Mass Unit Converter</h1>
+        <label for="inputNumber">Input Number:</label>
+        <input type="number" id="inputNumber" step="any" style="font-size: 20px;" required><br><br>
+
+        <label for="inputUnit">Input Unit:</label>
+        <select id="inputUnit" style="font-size: 20px;">
+            <option value="molar">Molar</option>
+            <option value="millimolar">Millimolar</option>
+            <option value="micromolar">Micromolar</option>
+            <option value="nanomolar">Nanomolar</option>
+            <option value="picomolar">Picomolar</option>
+        </select><br><br>
+
+        <label for="molecularWeight">Molecular Weight:</label>
+        <input type="number" id="molecularWeight" step="any" style="font-size: 20px;" required><br><br>
+
+        <label for="outputUnit">Output Unit:</label>
+        <select id="outputUnit" style="font-size: 20px;">
+            <option value="grams">Grams</option>
+            <option value="milligram">Milligrams</option>
+            <option value="microgram">Micrograms</option>
+            <option value="nanogram">Nanograms</option>
+            <option value="picogram">Picograms</option>
+        </select><br><br>
+
+        <button onclick="calculate()" style="font-size: 20px;">Calculate</button><br><br>
+
+        <div id="result"></div>
+    </div>
+</body>
+</html>
